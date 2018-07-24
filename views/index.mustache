@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wanderer.</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+    <script>
+        window.onload = function (){
+            let preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            preloader.style.visibility = `hidden`;
+            preloader.style.maxHeight = '0px';
+        }
+        function getList(e){
+            let form = $('#searchForm').serialize();
+            let res = ''
+            $.post('/search',form,function(results){
+                results.forEach((result) => {
+                   res += '<li>'+result+'</li>'
+                })
+                document.getElementById('results').innerHTML = res
+            })
+        }
+        
+    </script> 
+</head>
+<body>
+    <div class="preloader">
+        <li>L</li>
+        <li>O</li>
+        <li>A</li>
+        <li>D</li>
+        <li>I</li>
+        <li>N</li>
+        <li>G</li>
+    </div>
+    <div class="container">
+        <div class="wrapper">
+
+            <!-- SEARCH WINDOW -->
+            <div id="searchWindow">
+                <button id="searchWindowClose" onclick="closeSearchWindow()"><i class="fas fa-times"></i></button>
+                <form id="searchForm">
+                    <input type="text" name="location" id="search" placeholder="search" oninput="getList(this)"/>
+                </form> 
+
+                <div id="results"></div>
+            </div>
+            <!-- TOP NAVIGATION AND LOGO -->
+            <nav>
+                <div id="logo"><b>WANDERER.</b></div>
+                <div id="navBtns">
+                    <a href="">About</a>
+                    <a href="">Contact</a>
+                </div>
+            </nav>
+
+            <!-- MAIN MIDDLE SECTION -->
+            <div id="locationName">Mount Everest.</div>
+            <button id="ctaBtn">EXPLORE</button>
+            <div class="dates">
+                <li class="dateArrow" id="dateUpArrow"><i class="fas fa-chevron-up"></i></li>   
+                <div id="dateCover"></div>
+                <li class="dateArrow" id="dateDownArrow" value="0"><i class="fas fa-chevron-down"></i></li>   
+            </div>
+
+            <!-- FOTTER SECTION -->
+            <footer>
+                <div id="socialLogos">
+                    <span><img class="si" src="SVG/twitter.svg" alt=""><span class="hidden tt">Twitter</span></span>
+                    <span><img class="si" src="SVG/instagram.svg" alt=""><span class="hidden it">Instagram</span></span>
+                    <span><img class="si" src="SVG/facebook.svg" alt=""><span class="hidden ft">Facebook</span></span>
+                </div>
+                <div id="searchBtnWrapper">
+                    <button onclick="openSearchWindow()" id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                
+            </footer>
+        </div>
+    </div>
+   
+    <script src="js/main.js"></script>
+
+</body>
+</html>

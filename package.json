@@ -1,0 +1,25 @@
+{
+  "name": "wanderer-website",
+  "version": "1.0.0",
+  "description": "Travel website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "travel",
+    "places"
+  ],
+  "author": "rachit",
+  "license": "ISC",
+  "devDependencies": {
+    "@google/maps": "^0.5.5",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "fetch": "^1.1.0",
+    "jquery": "^3.3.1",
+    "mustache": "^2.3.0",
+    "mustache-express": "^1.2.7",
+    "node-fetch": "^2.2.0"
+  }
+}
