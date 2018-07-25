@@ -15,16 +15,7 @@
             preloader.style.visibility = `hidden`;
             preloader.style.maxHeight = '0px';
         }
-        function getList(e){
-            let form = $('#searchForm').serialize();
-            let res = ''
-            $.post('/search',form,function(results){
-                results.forEach((result) => {
-                   res += '<li>'+result+'</li>'
-                })
-                document.getElementById('results').innerHTML = res
-            })
-        }
+        
         
     </script> 
 </head>
@@ -39,6 +30,14 @@
         <li>G</li>
     </div>
     <div class="container">
+        <!-- TOP NAVIGATION AND LOGO -->
+        <nav>
+            <div id="logo"><b>WANDERER.</b></div>
+            <div id="navBtns">
+                <a href="">About</a>
+                <a href="">Contact</a>
+            </div>
+        </nav>
         <div class="wrapper">
 
             <!-- SEARCH WINDOW -->
@@ -50,37 +49,29 @@
 
                 <div id="results"></div>
             </div>
-            <!-- TOP NAVIGATION AND LOGO -->
-            <nav>
-                <div id="logo"><b>WANDERER.</b></div>
-                <div id="navBtns">
-                    <a href="">About</a>
-                    <a href="">Contact</a>
-                </div>
-            </nav>
 
             <!-- MAIN MIDDLE SECTION -->
-            <div id="locationName">Mount Everest.</div>
+            <div id="locationName"><span>Mount Everest.</span></div>
             <button id="ctaBtn">EXPLORE</button>
             <div class="dates">
                 <li class="dateArrow" id="dateUpArrow"><i class="fas fa-chevron-up"></i></li>   
                 <div id="dateCover"></div>
                 <li class="dateArrow" id="dateDownArrow" value="0"><i class="fas fa-chevron-down"></i></li>   
             </div>
-
-            <!-- FOTTER SECTION -->
-            <footer>
-                <div id="socialLogos">
-                    <span><img class="si" src="SVG/twitter.svg" alt=""><span class="hidden tt">Twitter</span></span>
-                    <span><img class="si" src="SVG/instagram.svg" alt=""><span class="hidden it">Instagram</span></span>
-                    <span><img class="si" src="SVG/facebook.svg" alt=""><span class="hidden ft">Facebook</span></span>
-                </div>
-                <div id="searchBtnWrapper">
-                    <button onclick="openSearchWindow()" id="searchBtn"><i class="fas fa-search"></i></button>
-                </div>
-                
-            </footer>
+            
         </div>
+        <!-- FOTTER SECTION -->
+        <footer>
+            <div id="socialLogos">
+                <span><img class="si" src="SVG/twitter.svg" alt=""><span class="hidden tt">Twitter</span></span>
+                <span><img class="si" src="SVG/instagram.svg" alt=""><span class="hidden it">Instagram</span></span>
+                <span><img class="si" src="SVG/facebook.svg" alt=""><span class="hidden ft">Facebook</span></span>
+            </div>
+            <div id="searchBtnWrapper">
+                <button onclick="openSearchWindow()" id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+                
+        </footer>
     </div>
    
     <script src="js/main.js"></script>

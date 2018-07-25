@@ -21,53 +21,29 @@ function closeSearchWindow(){
     document.body.classList.remove('searchOpen');
 }
 
-// // Dynamic date section
 
-// let date = new Date()
-// let today = date.getDate()
-// let dateCover = document.getElementById('dateCover');
-// let displayDates = '';
-// for (var i=1;i<=31;i++){
-//     if(i==1 || i%5==0){
-//         if(i < 10){
-//             displayDates += `<li class="date" id="section${i}">0${i}</li>`
-//             continue
-//         }
-//         displayDates += `<li class="date" id="section${i}">${i}</li>`
-//         continue
-//     }
-//     if(i < 10){
-//         displayDates += `<li class="date">0${i}</li>`
-//         continue
-//     }
-//     if(i == today){
-//         displayDates += `<li class="date" id="today">${i}</li>`
-//         continue
-//     }
-    
-//     displayDates += `<li class="date">${i}</li>`
-// }
-// dateCover.innerHTML = displayDates
+// GETTING DATA FROM GOOGLE  
+function getList(e){
+    let form = $('#searchForm').serialize();
+    let res = ''
+    $.post('/search',form,function(results){
+        results.forEach((result) => {
+           res += `<a onclick='getDetails(this)' value=${result.place_id}><li><span class="title">${result.structured_formatting.main_text}</span><span class="subtitle">${result.structured_formatting.secondary_text}</span></li></a>`
+        })
+        document.getElementById('results').innerHTML = res
+    })
+}
 
-// let downArrowBtn = document.getElementById('dateDownArrow');
-// let upArrowBtn = document.getElementById('dateUpArrow');
-// downArrowBtn.addEventListener('click',scrollDown)
-// upArrowBtn.addEventListener('click',scrollUp)
-// function scrollDown(){
-//     let currentSection = this.value;
-//     let nextSection = document.getElementById(`section${currentSection+5}`)
-//     nextSection.scrollIntoView()
+function getDetails(e){
+    let placeid = $(e).attr('value')
+    console.log(placeid)
+    $.get('/search/'+placeid,function(details){
+        document.querySelector('.wrapper').style.background = 'url(https://maps.googleapis.com/maps/api/place/photo?maxwidth='+details.photos[0].width+'&photoreference='+details.photos[0].photo_reference+'&key=AIzaSyAdM0WKXPgir7Vqb-t-uuqStoCaAlla4o0)';
+        document.querySelector('.wrapper').style.backgroundSize = 'cover';
+        document.querySelector('#locationName span').innerHTML = details.name;
+    })
 
-//     upArrowBtn.value = currentSection;
-//     this.value += 5; 
-// }
-// function scrollUp(){
-//     let currentSection = this.value;
-//     if(currentSection == 0) currentSection = 1;
-//     let previousSection = document.getElementById(`section${currentSection}`)
-//     previousSection.scrollIntoView()
-
-     
-//     this.value -= 5; 
-// }
-
+    document.getElementById('searchForm').reset()
+    document.getElementById('results').innerHTML = ''
+    closeSearchWindow()
+}
