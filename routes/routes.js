@@ -16,7 +16,7 @@ router.get('/',(req,res)=>{
 // Geocode an address.
 router.post('/search',(req,res)=>{
     let location = encodeURIComponent(req.body.location);
-        fetch('https://maps.googleapis.com/maps/api/place/autocomplete/json?key=AIzaSyAdM0WKXPgir7Vqb-t-uuqStoCaAlla4o0&input='+location)
+        fetch('https://maps.googleapis.com/maps/api/place/autocomplete/json?key=AIzaSyAo2IZrH11E5FlSohn-0U2IEoWUO7ROWQE&input='+location)
             .then(response => response.json())
             .then((json) => {
                 let prediction = json.predictions
@@ -35,12 +35,26 @@ router.post('/search',(req,res)=>{
 
 router.get('/search/:placeid',(req,res)=>{
     placeId = req.params.placeid
-    console.log(placeId)
-    fetch('https://maps.googleapis.com/maps/api/place/details/json?placeid='+placeId+'&key=AIzaSyAdM0WKXPgir7Vqb-t-uuqStoCaAlla4o0')
+    // console.log(placeId)
+    fetch('https://maps.googleapis.com/maps/api/place/details/json?placeid='+placeId+'&key=AIzaSyAo2IZrH11E5FlSohn-0U2IEoWUO7ROWQE')
         .then(response => response.json())
         .then((json) => {
             let details = json.result;
             res.send(details)
+            // console.log(details)
+            
+        })
+        .catch(err => console.log(err))
+})
+
+router.get('/exp/:placeid',(req,res)=>{
+    placeId = req.params.placeid
+    // console.log(placeId)
+    fetch('https://maps.googleapis.com/maps/api/place/details/json?placeid='+placeId+'&key=AIzaSyAo2IZrH11E5FlSohn-0U2IEoWUO7ROWQE')
+        .then(response => response.json())
+        .then((json) => {
+            let details = json.result;
+            res.render('explore',{details})
             // console.log(details)
             
         })

@@ -28,7 +28,7 @@ function getList(e){
     let res = ''
     $.post('/search',form,function(results){
         results.forEach((result) => {
-           res += `<a onclick='getDetails(this)' value=${result.place_id}><li><span class="title">${result.structured_formatting.main_text}</span><span class="subtitle">${result.structured_formatting.secondary_text}</span></li></a>`
+           res += `<a onclick='getDetails(this)' value=${result.place_id}><li><span class="locationIcon"><img src="/icons/icons/svg/placeholder-3.svg" width="20px"></span><span class="title">${result.structured_formatting.main_text}</span><span class="subtitle">${result.structured_formatting.secondary_text}</span></li></a>`
         })
         document.getElementById('results').innerHTML = res
     })
@@ -36,11 +36,14 @@ function getList(e){
 
 function getDetails(e){
     let placeid = $(e).attr('value')
-    console.log(placeid)
+    let exploreForm= $('#exploreForm')
+    exploreForm.attr('action',`/exp/${placeid}`);
+    // console.log(placeid)
     $.get('/search/'+placeid,function(details){
-        document.querySelector('.wrapper').style.background = 'url(https://maps.googleapis.com/maps/api/place/photo?maxwidth='+details.photos[0].width+'&photoreference='+details.photos[0].photo_reference+'&key=AIzaSyAdM0WKXPgir7Vqb-t-uuqStoCaAlla4o0)';
+        document.querySelector('.wrapper').style.background = 'url(https://maps.googleapis.com/maps/api/place/photo?maxwidth='+details.photos[0].width+'&photoreference='+details.photos[2].photo_reference+'&key=AIzaSyAo2IZrH11E5FlSohn-0U2IEoWUO7ROWQE)';
         document.querySelector('.wrapper').style.backgroundSize = 'cover';
         document.querySelector('#locationName span').innerHTML = details.name;
+        document.getElementById('ctaBtn').innerHTML = 'EXPLORE ' + details.name.toUpperCase()
     })
 
     document.getElementById('searchForm').reset()

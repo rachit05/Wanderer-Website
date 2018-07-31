@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+<style>
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+    margin:0;
+    padding:0;
+    font-family: 'Montserrat';
+    scroll-behavior: smooth;
+    overflow-X:hidden;
+  }
+#backHome{
+    position:absolute;
+    top:50%;
+    left:2%;
+    transform:translate(-2%,-45%);
+    cursor:pointer;
+}
+#banner{
+    width:100vw;
+    height:20vh;
+    background:#55b39d;
+    color:white;
+    position:relative;
+}
+#bannerWrapper{
+    width:80vw;
+    display:grid;
+    align-items:center;
+    margin:0 auto;
+}
+#banner h1{
+    font-size:300%;
+    letter-spacing:0.2em;
+}
+#banner h2{
+    color:#0000008c;
+    font-size:1em;
+}
+.container{
+    width:80vw;
+    margin:0 auto;
+    background:#eee; 
+    column-count:1;
+    column-gap:1em;
+    padding:1em;
+}
+.items{
+    width:100%;
+    overflow-X:hidden;
+    margin-bottom:1em;
+    cursor:pointer;
+}
+#modal{
+    position:absolute;
+    width:100vw;
+    height:100vh;
+    opacity:0;
+    visibility:hidden;
+    transition:300ms ease-in-out;
+    z-index:10;
+    top:0;
+    left:0;
+}
+#modalContent{
+    width:80vw;
+    height:80vh;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:white;
+    overflow:hidden;
+}
+#modalClose{
+    cursor:pointer;
+    position:absolute;
+    right:5%;
+    font-size:5em;
+    color:white
+}
+#modal.open{
+    visibility:visible;
+    opacity:1;
+}
+#modal.open ~ div{
+    transition:filter 200ms ;
+    filter:blur(15px)
+}
+
+@media only screen and (min-width: 1024px) {
+  .container {
+    column-count: 3;
+  }
+  #bannerWrapper{
+    height:100%;
+    grid-template-columns:4fr 2fr;
+    align-items:center;
+  }
+  #banner h2{
+      text-align:right
+  }
+}
+
+/* Masonry on medium-sized screens */
+@media only screen and (max-width: 1023px) and (min-width: 768px) {
+  .container {
+    column-count: 2;
+  }
+  #banner{
+    height:30vh;
+  }
+  #bannerWrapper{
+    height:100%;
+    grid-template-rows:4fr 2fr;
+    justify-content:center;
+    align-items:center
+  }
+  #banner h2{
+    text-align:left;
+  }
+}
+
+/* Masonry on small screens */
+@media only screen and (max-width: 767px) and (min-width: 320px) {
+  .container {
+    column-count: 1;
+  }
+  #banner{
+    height:30vh;
+  }
+  #bannerWrapper{
+    height:100%;
+    grid-template-rows:4fr 2fr;
+    justify-content:center;
+    align-items:center
+  }
+  #banner h2{
+    text-align:left;
+  }
+}
+
+</style>
+<title>Wanderer.</title>
+<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script src="https://use.fontawesome.com/0da8d9a0f7.js"></script>
+</head>
+<body>
+<div id="modal">
+    <div id="modalClose" onclick="closeModal()">&times;</div>
+    <div id="modalContent"></div>
+</div>
+<div id="banner">
+<div id="backHome">
+    <a href="/"><img src="/SVG/back-arrow.svg" width="43px"></a>
+</div>
+<div id="bannerWrapper">
+    {{#details}}
+        <h1>{{name}}</h1>
+        <h2>
+            {{#geometry}}
+                {{#location}}
+                    LAT: {{lat}}<br>LNG: {{lng}}<br>
+                {{/location}}
+            {{/geometry}}
+            FA: {{formatted_address}}
+        </h2>
+    {{/details}}
+</div>
+</div>
+<div class="container">
+{{#details}}
+    {{#photos}}
+        {{#.}}
+            <div class="items">
+                <img  src='https://maps.googleapis.com/maps/api/place/photo?maxwidth=550+&photoreference=+{{photo_reference}}+&key=AIzaSyAo2IZrH11E5FlSohn-0U2IEoWUO7ROWQE' onclick="showFullImage(this)">
+            </div>
+        {{/.}}
+    {{/photos}}
+{{/details}}
+</div>
+
+<script>
+    let modal = document.getElementById('modal');
+    let modalContent = document.getElementById('modalContent');
+    function showFullImage(img){
+        let src=img.getAttribute('src')
+        modal.classList.add('open');
+        modalContent.innerHTML = "<img src="+src+" width='100%' height='100%'>";
+    }
+    function closeModal(){
+        modal.classList.remove('open')
+
+    }
+</script>
+
+</body>
+</html>
